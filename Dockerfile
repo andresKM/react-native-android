@@ -99,7 +99,7 @@ RUN npm install react-native-cli -g
 RUN npm install rnpm -g
 RUN mkdir workdir \ 
     cd workdir \
-    npm install -g create-react-app \
+    npm install create-react-app -g \
     create-react-app eod \
     cd eod 
 
