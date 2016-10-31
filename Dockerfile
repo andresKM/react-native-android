@@ -97,10 +97,10 @@ ENV PATH ${PATH}:/opt/node/bin
 # ——————————
 RUN npm install react-native-cli -g
 RUN npm install rnpm -g
-RUN mkdir workdir \ 
-    cd workdir \
-    npm install create-react-app -g \
-    create-react-app eod \
-    cd eod 
+#RUN mkdir workdir \ 
+#    cd workdir \
+#    npm install create-react-app -g \
+#    create-react-app eod \
+#    cd eod 
 
 ENV LANG en_US.UTF-8
