@@ -83,7 +83,7 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # ——————————
 # Install Node and global packages
 # ——————————
-ENV NODE_VERSION 5.6.0
+ENV NODE_VERSION 6.9.1
 RUN cd && \
     wget -q http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-x64.tar.gz && \
@@ -93,9 +93,15 @@ ENV PATH ${PATH}:/opt/node/bin
 
 
 # ——————————
-# Install Basic React-Native packages
+# Install React-Native packages
 # ——————————
 RUN npm install react-native-cli -g
 RUN npm install rnpm -g
+RUN mkdir workdir \ 
+    cd workdir \
+    npm install -g create-react-app \
+    npm install -g pouchdb-react-native --save \
+    create-react-app eod \
+    cd eod 
 
 ENV LANG en_US.UTF-8
