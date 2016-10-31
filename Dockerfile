@@ -100,7 +100,6 @@ RUN npm install rnpm -g
 RUN mkdir workdir \ 
     cd workdir \
     npm install -g create-react-app \
-    npm install -g pouchdb-react-native --save \
     create-react-app eod \
     cd eod 
 
