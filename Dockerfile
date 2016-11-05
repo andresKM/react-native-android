@@ -104,7 +104,7 @@ ENV PATH "$PATH:/opt/yarn/bin"
 # Yarn is now in /opt/yarn/
 RUN mkdir -p /workdir && \
     cd /workdir 
-RUN yarn add global react-native-cli
+RUN yarn global add react-native-cli
 
 #RUN npm install react-native-cli -g
 #RUN npm install rnpm -g
