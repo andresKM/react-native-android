@@ -83,7 +83,7 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # ——————————
 # Install Node and global packages
 # ——————————
-ENV NODE_VERSION 6.9.1
+ENV NODE_VERSION 7.0.0
 RUN cd && \
     wget -q http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-x64.tar.gz && \
@@ -95,10 +95,14 @@ ENV PATH ${PATH}:/opt/node/bin
 # ——————————
 # Install React-Native packages
 # ——————————
-RUN curl -o -L https://yarnpkg.com/install.sh | bash && \
-    cd ~ && \
-    source ~/.bashrc && \
-    cd /workdir/ 
+    
+RUN mkdir -p /opt/yarn && \
+    cd /opt/yarn && \
+    wget -q https://yarnpkg.com/latest.tar.gz && \
+    tar -xzf latest.tar.gz --strip 1
+ENV PATH "$PATH:/opt/yarn/bin"
+# Yarn is now in /opt/yarn/
+RUN cd /workdir/ 
 RUN yarn add global react-native-cli
 
 #RUN npm install react-native-cli -g
