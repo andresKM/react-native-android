@@ -102,7 +102,7 @@ RUN mkdir -p /opt/yarn && \
     tar -xzf latest.tar.gz --strip 1
 ENV PATH "$PATH:/opt/yarn/bin"
 # Yarn is now in /opt/yarn/
-RUN cd /workdir/ 
+RUN cd /workdir 
 RUN yarn add global react-native-cli
 
 #RUN npm install react-native-cli -g
