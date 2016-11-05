@@ -67,7 +67,7 @@ RUN cd /opt && \
 # ——————————
 
 # Gradle
-ENV GRADLE_VERSION 2.4
+ENV GRADLE_VERSION 3.1
 
 RUN cd /usr/lib \
  && curl -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o gradle-bin.zip \
@@ -95,8 +95,14 @@ ENV PATH ${PATH}:/opt/node/bin
 # ——————————
 # Install React-Native packages
 # ——————————
-RUN npm install react-native-cli -g
-RUN npm install rnpm -g
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash \
+    source ~/.bashrc \
+    cd workdir/ 
+RUN yarn add global react-native-cli
+
+#RUN npm install react-native-cli -g
+#RUN npm install rnpm -g
+
 #RUN mkdir workdir \ 
 #    cd workdir \
 #    npm install create-react-app -g \
