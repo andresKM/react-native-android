@@ -95,8 +95,8 @@ ENV PATH ${PATH}:/opt/node/bin
 # ——————————
 # Install React-Native packages
 # ——————————
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash \
-    source ~/.bashrc \
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash && \
+    source ~/.bashrc && \
     cd workdir/ 
 RUN yarn add global react-native-cli
 
