@@ -105,6 +105,7 @@ ENV PATH "$PATH:/opt/yarn/bin"
 RUN mkdir -p /workdir && \
     cd /workdir 
 RUN yarn global add react-native-cli
+RUN echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 #RUN npm install react-native-cli -g
 #RUN npm install rnpm -g
