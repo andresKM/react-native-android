@@ -67,7 +67,7 @@ RUN cd /opt && \
 # ——————————
 
 # Gradle
-ENV GRADLE_VERSION 2.4
+ENV GRADLE_VERSION 3.1
 
 RUN cd /usr/lib \
  && curl -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o gradle-bin.zip \
@@ -83,7 +83,7 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # ——————————
 # Install Node and global packages
 # ——————————
-ENV NODE_VERSION 6.9.1
+ENV NODE_VERSION 7.0.0
 RUN cd && \
     wget -q http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-x64.tar.gz && \
@@ -95,8 +95,21 @@ ENV PATH ${PATH}:/opt/node/bin
 # ——————————
 # Install React-Native packages
 # ——————————
-RUN npm install react-native-cli -g
-RUN npm install rnpm -g
+    
+RUN mkdir -p /opt/yarn && \
+    cd /opt/yarn && \
+    wget -q https://yarnpkg.com/latest.tar.gz && \
+    tar -xzf latest.tar.gz --strip 1
+ENV PATH "$PATH:/opt/yarn/bin"
+# Yarn is now in /opt/yarn/
+RUN mkdir -p /workdir && \
+    cd /workdir 
+RUN yarn global add react-native-cli
+RUN echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+#RUN npm install react-native-cli -g
+#RUN npm install rnpm -g
+
 #RUN mkdir workdir \ 
 #    cd workdir \
 #    npm install create-react-app -g \
