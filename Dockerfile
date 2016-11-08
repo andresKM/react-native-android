@@ -8,7 +8,7 @@ RUN apt-get update && \
     wget \
     curl \
     git \
-    unzip -y && \
+    unzip -y --no-install-recommends && \
     apt-get clean
 
 
@@ -20,7 +20,7 @@ RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
-  apt-get install -y oracle-java8-installer && \
+  apt-get install -y oracle-java8-installer --no-install-recommends && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
 
@@ -72,8 +72,8 @@ ENV GRADLE_VERSION 3.1
 RUN cd /usr/lib \
  && curl -fl https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o gradle-bin.zip \
  && unzip "gradle-bin.zip" \
- && ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle \
- && rm "gradle-bin.zip"
+ && ln -s "/usr/lib/gradle-${GRADLE_VERSION}/bin/gradle" /usr/bin/gradle
+# && rm "gradle-bin.zip"
 
 # Set Appropriate Environmental Variables
 ENV GRADLE_HOME /usr/lib/gradle
@@ -83,7 +83,7 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # ——————————
 # Install Node and global packages
 # ——————————
-ENV NODE_VERSION 7.0.0
+ENV NODE_VERSION 6.9.1
 RUN cd && \
     wget -q http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz && \
     tar -xzf node-v${NODE_VERSION}-linux-x64.tar.gz && \
@@ -105,7 +105,8 @@ ENV PATH "$PATH:/opt/yarn/bin"
 RUN mkdir -p /workdir && \
     cd /workdir 
 RUN yarn global add react-native-cli
-RUN echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+#RUN echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+RUN sysctl -w fs.inotify.max_user_watches=1048576
 
 #RUN npm install react-native-cli -g
 #RUN npm install rnpm -g
